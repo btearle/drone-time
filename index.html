@@ -1,0 +1,135 @@
+<html>
+<script language='javascript'>
+
+  var xhr = new XMLHttpRequest();
+  function call(name) {
+
+    xhr.open('GET', name, true);
+    xhr.send();
+  }
+
+  var arc = 0;
+  function pressKey(event) {
+    var  x = event.which || event.keyCode;
+    var command = "none";
+    switch(x) {
+      case 38:
+        call('up');
+        command = "up";
+        break;
+      case 40:
+        call('down');
+        command = "down";
+        break;
+      case 37:
+        call('counterClockwise');
+        command = "counterClockwise";
+        break;
+      case 39:
+        call('clockwise');
+        command = "clockwise";
+        break;
+      case 87:
+        call('front');
+        command = "forward";
+        break;
+      case 83:
+        call('back');
+        command = "backward";
+        break;
+      case 65:
+        call('left');
+        command = "left";
+        break;
+      case 68:
+        call('right');
+        command = "right";
+        break;
+      case 84:
+        call('takeoff');
+        command = "takeoff";
+        break;
+      case 76:
+        call('land');
+        command = "land";
+        break;
+      default:
+        call('hover');
+        command = "hover";
+    }
+    document.getElementById("demo").innerHTML = "Unicode value: " + x + "Command: " + command;
+  }
+
+  function releaseKey(event) {
+    call('hover');
+    document.getElementById("demo").innerHTML = "HOVER";
+  }
+
+window.setInterval("reloadIFrame();",1000);
+function reloadIFrame() {
+  document.getElementById("iframe_drone_image").src="http://localhost:3000/drone_image.html";
+}
+
+</script>
+<body>
+<table border=1>
+<tr>
+  <td align = "center">
+    <iframe src="http://localhost:3000/drone_image.html" height="380" width="660"
+    name="iframe_drone_image"></iframe>
+  </td>
+  <td>
+    <table cellpadding="4">
+    <tr>
+      <td align="center">
+        <a onclick="call('takeoff');"><img height=70
+          src="http://localhost:3000/takeoff.png"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a onclick="call('land');"><img height=70
+          src="http://localhost:3000/land.png"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a onclick="call('photos');"><img height=70
+          src="http://localhost:3000/camera.png"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a onclick="call('calibrate');"><img height=70
+          src="http://localhost:3000/calibrate.png"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a onclick="call('hover');"><img height=70
+          src="http://localhost:3000/hover.png"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <a onclick="call('clockwise');"><img height=70
+          src="http://localhost:3000/clockwise.png"></a>
+      </td>
+    </tr>
+
+    <tr>
+      <td align="center">
+        <input type="text" size="40" onkeydown="pressKey(event)" onkeyup="releaseKey(event);">
+        <p id="demo"></p>
+      </td>
+    </tr>
+
+    </table>
+  </td>
+</tr>
+</table>
+</div>
+</body>
+</html>
+<!-- <a onclick="call('takeoff');">Takeoff</a>
+<a onclick="call('land');">Land</a> -->
