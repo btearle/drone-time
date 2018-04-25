@@ -2,13 +2,13 @@ var express = require('express');
 var arDrone = require('ar-drone');
 var fs = require('fs');
 
-var client = arDrone.createClient();
+var client = arDrone.createClient({ip: "192.168.0.69"});
 var app = express();
 app.use(express.static('public'));
 var path = require('path');
 
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname + '/index.html'));
+  res.sendFile(path.join(__dirname + '/droneOutWithMyBoneOut.html'));
 });
 
 app.get('/land', function(req, res){
@@ -74,8 +74,9 @@ app.get('/counterClockwise', function(req, res){
 
 app.get('/photos', function(req, res){
   console.log("drone taking sick pics");
+  require('ar-drone-png-stream')(client, { port: 8000 });
   var pngStream = client.getPngStream();
-  var period = 500; // save sick pic every x ms
+  var period = 100; // save sick pic every x ms
   var lastFrameTime = 0;
   pngStream
     .on('error', console.log)
@@ -87,9 +88,7 @@ app.get('/photos', function(req, res){
   function(err){
         if (err) {
           console.log("Error saving PNG: " + err);
-        } else {
-          console.log("Saved frame");
-          }
+        }
       });
     }
   });

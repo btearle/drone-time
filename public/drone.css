@@ -1,0 +1,33 @@
+#content {
+  text-align: center;
+
+}
+
+body {
+  margin: 0;
+}
+
+.landing {
+  margin: 0;
+  background: url(https://www.juguetronica.com/blog/wp-content/uploads/2017/06/consejos-volar-drone-verano-portada-960x540.jpg);
+  background-size: cover;
+  height: 100vh;
+}
+
+hr {
+  width: 700px;
+}
+
+.actionBtn {
+  float: left;
+  width: 90%;
+  margin: 10px auto;
+  color: #FAEBD7;
+  background-color: #7395AE;
+}
+
+#controlPg {
+  margin: 0;
+  height: 100vh;
+  background-color: #5D5C61;
+}
