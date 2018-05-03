@@ -3,86 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="drone.css">
+  <link rel="stylesheet" type="text/css" href="/css/lib/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/drone.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+  <script type="text/javascript" src="/js/lib/jquery-3.3.1.min.js"></script>
   <title>DroneTime</title>
-  <script language='javascript'>
-    var xhr = new XMLHttpRequest();
-
-    function call(name) {
-
-      xhr.open('GET', name, true);
-      xhr.send();
-    }
-
-    var arc = 0;
-
-    function pressKey(event) {
-      var x = event.which || event.keyCode;
-      var command = "none";
-      switch (x) {
-        case 38:
-          call('up');
-          command = "up";
-          break;
-        case 40:
-          call('down');
-          command = "down";
-          break;
-        case 37:
-          call('counterClockwise');
-          command = "counterClockwise";
-          break;
-        case 39:
-          call('clockwise');
-          command = "clockwise";
-          break;
-        case 87:
-          call('front');
-          command = "forward";
-          break;
-        case 83:
-          call('back');
-          command = "backward";
-          break;
-        case 65:
-          call('left');
-          command = "left";
-          break;
-        case 68:
-          call('right');
-          command = "right";
-          break;
-        case 84:
-          call('takeoff');
-          command = "takeoff";
-          break;
-        case 76:
-          call('land');
-          command = "land";
-          break;
-        default:
-          call('hover');
-          command = "hover";
-      }
-      document.getElementById("demo").innerHTML = "Unicode value: " + x + "Command: " + command;
-    }
-
-    function releaseKey(event) {
-      call('hover');
-      document.getElementById("demo").innerHTML = "HOVER";
-    }
-
-    window.setInterval("reloadIFrame();", 10000);
-
-    function reloadIFrame() {
-      document.getElementById("iframe_drone_image").src = "http://localhost:3000/drone_image.html";
-    }
-  </script>
 </head>
 
 <body>
@@ -91,48 +17,64 @@
       <h1>DroneBoys</h1>
       <h3>This is an app en fuego that lets you shred our gnarly drone</h3>
       <hr>
-      <button class="btn btn-default btn-lg"><i class="fas fa-gamepad"></i>Let's Rip</button>
+      <button id="goBtn" class="btn btn-default btn-lg"><i class="fas fa-gamepad"></i>Let's Rip</button>
     </div>
   </div>
   <div id="controlPg">
     <div class="container">
-      <h1>bigcontainer</h1>
+      <p class="navbar-text navbar-right bar">Try not to get too stoked</p>
       <div class="row">
         <div class="col-sm-4">
-            <h1>col4</h1>
-            <button class="btn btn-primary actionBtn" onclick="call('takeoff');">
-            Take Off Dude!
-            </button>
-            <button class="btn btn-primary actionBtn" onclick="call('land');">
-            !!!Land Friend
-            </button>
-            <button class="btn btn-primary actionBtn" onclick="call('photos');">
-            Pics Amigo!!
-            </button>
-            <button class="btn btn-primary actionBtn" onclick="call('calibrate');">
-            Calibrate HAH!A!
-            </button>
-            <button class="btn btn-primary actionBtn" onclick="call('hover');">
-            Hover WOWO!!
-            </button>
-            <button class="btn btn-primary actionBtn" onclick="call('clockwise');">
-            Spinny Spin Now!!
-            </button>
-            <input type="text" size="40" onkeydown="pressKey(event)" onkeyup="releaseKey(event);">
-            <p id="demo"></p>
+          <button class="btn btn-primary actionBtn" onclick="call('takeoff');">
+          Take Off
+          </button>
+          <button class="btn btn-primary actionBtn" onclick="call('land');">
+          Land
+          </button>
+          <button class="btn btn-primary actionBtn" onclick="call('photos');">
+          Pics
+          </button>
+          <button class="btn btn-primary actionBtn" onclick="call('calibrate');">
+          Calibrate
+          </button>
+          <button class="btn btn-primary actionBtn" onclick="call('hover');">
+          Hover WOWO!!
+          </button>
+          <button class="btn btn-primary actionBtn" onclick="call('clockwise');">
+          Spinny Spin Now!!
+          </button>
+          <p id="demo"></p>
         </div>
         <div class="col-sm-8">
-            <h1>col8</h1>
             <iframe src="http://localhost:8000" height="400px" width="100%" name="iframe_drone_image"></iframe>
+        </div>
+      </div>
+      <div id="control" class="row">
+        <div class="col-sm-4">
+          <div class="key invisible"></div>
+          <div class="key">w</div>
+          <div class="key invisible"></div>
+          <div class="key">a</div>
+          <div class="key">s</div>
+          <div class="key">d</div>
+        </div>
+        <div class="col-sm-4">
+          <div class="key invisible"></div>
+          <div class="key">up</div>
+          <div class="key invisible"></div>
+          <div class="key">left</div>
+          <div class="key">down</div>
+          <div class="key">right</div>
+        </div>
+        <div class="col-sm-4">
+          <h2>empty</h2>
         </div>
       </div>
     </div>
   </div>
 
-
-
+  <script type="text/javascript" src="/js/droneOut.js"></script>
 </body>
-
 </html>
 <!-- <a onclick="call('takeoff');">Takeoff</a>
 <a onclick="call('land');">Land</a> -->

@@ -2,13 +2,15 @@ var express = require('express');
 var arDrone = require('ar-drone');
 var fs = require('fs');
 
-var client = arDrone.createClient({ip: "192.168.0.69"});
+var client = arDrone.createClient({ip: "192.168.0.69"}); //for wpa2 connection
+//var client = arDrone.createClient(); //for drone wifi connection
+
 var app = express();
-app.use(express.static('public'));
+app.use(express.static('assets'));
 var path = require('path');
 
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname + '/droneOutWithMyBoneOut.html'));
+  res.sendFile(path.join(__dirname + '/droneOut.html'));
 });
 
 app.get('/land', function(req, res){
@@ -78,32 +80,40 @@ app.get('/photos', function(req, res){
   var pngStream = client.getPngStream();
   var period = 100; // save sick pic every x ms
   var lastFrameTime = 0;
+  var count = 0;
+  var pngName = "";
+  var fs = require('fs');
+  var logger = fs.createWriteStream('rgb.txt', {
+    flags: 'a' // 'a' means appending (old data will be preserved)
+  });
+
   pngStream
     .on('error', console.log)
     .on('data', function(pngBuffer){
       var now = (new Date()).getTime();
       if (now - lastFrameTime > period){
         lastFrameTime = now;
-        fs.writeFile(__dirname + '/public/drone_image.png', pngBuffer,
-  function(err){
-        if (err) {
-          console.log("Error saving PNG: " + err);
+        timestamp = insertDecimal(now);
+        count = count + 1;
+        pngName = ('drone_image_' + count + '.png');
+        logger.write(timestamp + " rgb/" + pngName + "\n"); // append string to your file
+        fs.writeFile((__dirname + '/dronePics/' + pngName), pngBuffer,
+          function(err){
+            if (err) {
+              console.log("Error saving PNG: " + err);
+            }
+          });
         }
-      });
-    }
-  });
+    });
+    //logger.end() // close string
 });
 
-
+function insertDecimal(num) {
+   return Number.parseFloat(num / 1000).toFixed(3);
+}
 
 app.listen(3000, function (){
 });
-
-
-
-
-
-
 
 // app.get('/', (req, res) => res.send('Hello World!'))
 //
