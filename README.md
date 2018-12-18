@@ -1,4 +1,4 @@
-#Drone Time -- In Progress --
+# Drone Time -- In Progress --
 
 This project uses JS and HTML to conrol a Parrot AR drone from through a web interface.
 
